@@ -47,7 +47,26 @@ namespace BlockFitter
             }
             return neighbours;
         }
+        public State GetRandomState(Random r)
+        {
+            int containerTop = container.Top();
+            int containerBottom = container.Bottom();
+            int containerRight = container.Right();
+            int containerLeft = container.Left();
+            State copy = Clone();
+            for (int i = 0; i < pieces.Count; i++)
+            {
+                List<BlockShape> orientations = pieces[i].Orientations().Select(o => o.Normalize()).ToList();
+                int orientationIndex = r.Next(orientations.Count);
+                BlockShape po = orientations[orientationIndex];
 
+                int pieceRight = po.Right();
+                int pieceBottom = po.Bottom();
+                int xOffset = r.Next(containerRight - containerLeft - pieceRight + 1);
+                int yOffset = r.Next(containerBottom - containerTop - pieceBottom + 1);
+                copy.pieces[i] = po.Normalize(xOffset, yOffset);
+            }
+        }
         public State GetRandomNeighbour(Random r)
         {
             int containerTop = container.Top();
