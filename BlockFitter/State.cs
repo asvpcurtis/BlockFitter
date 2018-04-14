@@ -28,7 +28,7 @@ namespace BlockFitter
             int containerRight = container.Right();
             int containerLeft = container.Left();
             List<State> neighbours = new List<State>();
-            for (int i = 0; i < pieces.Count(); i++)
+            for (int i = 0; i < pieces.Count; i++)
             {
                 foreach (BlockShape po in pieces[i].Orientations().Select(o => o.Normalize()))
                 {
@@ -46,6 +46,25 @@ namespace BlockFitter
                 }
             }
             return neighbours;
+        }
+
+        public State GetRandomNeighbour(Random r)
+        {
+            int containerTop = container.Top();
+            int containerBottom = container.Bottom();
+            int containerRight = container.Right();
+            int containerLeft = container.Left();
+            int pieceIndex = r.Next(pieces.Count);
+            List<BlockShape> orientations = pieces[pieceIndex].Orientations().Select(o => o.Normalize()).ToList();
+            int orientationIndex = r.Next(orientations.Count);
+            BlockShape po = orientations[orientationIndex];
+            int pieceRight = po.Right();
+            int pieceBottom = po.Bottom();
+            int xOffset = r.Next(containerRight - containerLeft - pieceRight + 1);
+            int yOffset = r.Next(containerBottom - containerTop - pieceBottom + 1);
+            State copy = Clone();
+            copy.pieces[pieceIndex] = po.Normalize(xOffset, yOffset);
+            return copy;
         }
 
     }
