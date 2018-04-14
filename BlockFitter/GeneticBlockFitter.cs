@@ -8,12 +8,14 @@ namespace BlockFitter
 {
     class GeneticBlockFitter : IBlockFitter
     {
-        
-        public GeneticBlockFitter()
+        int populationSize;
+        Random r;
+        public GeneticBlockFitter(int populationSize)
         {
-
+            this.populationSize = populationSize;
+            r = new Random();
         }
-        public void Climb()
+        public State Climb(State problem, long timeoutMillis)
         {
             throw new NotImplementedException();
         }

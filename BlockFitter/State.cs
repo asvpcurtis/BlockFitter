@@ -86,7 +86,7 @@ namespace BlockFitter
             copy.pieces[pieceIndex] = po.Normalize(xOffset, yOffset);
             return copy;
         }
-        public int NumberOfOverlappingPieces()
+        public int NumberOfIntersectingPieces()
         {
             int outsideBounds = pieces
                 .Where(p => !container.Contains(p))
