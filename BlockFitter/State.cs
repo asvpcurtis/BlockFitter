@@ -100,18 +100,32 @@ namespace BlockFitter
             {
                 return total += pieces.Aggregate(0, (pTotal, bs2) =>
                 {
-                    if (bs1.Intersects(bs2))
+                    if (bs1 != bs2 && bs1.Intersects(bs2))
                     {
                         return pTotal + 1;
                     }
                     return pTotal;
                 });
             });
-            return outsideBounds + pieceOverlaps;
+            return outsideBounds + (pieceOverlaps / 2);
         }
         public int SpaceUncovered()
         {
-            throw new NotImplementedException();
+            int spaceUncovered = container.Units.Aggregate(0, (total, cu) => 
+            {
+                bool pieceOn = pieces.SelectMany(p => p.Units)
+                    .Any(pu => 
+                        pu.X == cu.X && pu.Y == cu.Y);
+                if (pieceOn)
+                {
+                    return total;
+                }
+                else
+                {
+                    return total + 1;
+                }
+            });
+            return spaceUncovered;
         }
     }
 }
