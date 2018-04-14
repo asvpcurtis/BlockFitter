@@ -86,6 +86,32 @@ namespace BlockFitter
             copy.pieces[pieceIndex] = po.Normalize(xOffset, yOffset);
             return copy;
         }
-
+        public int NumberOfOverlappingPieces()
+        {
+            int outsideBounds = pieces.Aggregate(0, (total, bs) => 
+            {
+                if (container.Contains(bs))
+                {
+                    return total;
+                }
+                return total + 1;
+            });
+            int pieceOverlaps = pieces.Aggregate(0, (total, bs1) =>
+            {
+                return total += pieces.Aggregate(0, (pTotal, bs2) =>
+                {
+                    if (bs1.Intersects(bs2))
+                    {
+                        return pTotal + 1;
+                    }
+                    return pTotal;
+                });
+            });
+            return outsideBounds + pieceOverlaps;
+        }
+        public int SpaceUncovered()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
