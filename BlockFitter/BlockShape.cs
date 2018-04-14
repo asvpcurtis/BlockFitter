@@ -8,8 +8,12 @@ namespace BlockFitter
 {
     class BlockShape
     {
-        public IEnumerable<Unit> Units { get; set; }
+        public List<Unit> Units { get; set; }
         public BlockShape Normalize()
+        {
+            return Normalize(0, 0);
+        }
+        public BlockShape Normalize(int left, int top)
         {
             int xOffset = Left();
             int yOffset = Right();
@@ -17,30 +21,32 @@ namespace BlockFitter
             {
                 Units = this.Units.Select(u => new Unit
                 {
-                    X = u.X - xOffset, Y = u.Y - yOffset
+                    X = u.X - xOffset + left,
+                    Y = u.Y - yOffset + top
                 }).ToList()
             };
         }
         public List<BlockShape> Orientations()
         {
+            // for now limit orientations to limit search
             BlockShape r0cw = Copy();
-            BlockShape r90cw = Rotate90Clockwise(r0cw);
-            BlockShape r180cw = Rotate90Clockwise(r90cw);
-            BlockShape r270cw = Rotate90Clockwise(r180cw);
-            BlockShape r0cwrx = ReflectXAxis(r0cw);
-            BlockShape r90cwrx = ReflectXAxis(r90cw);
-            BlockShape r180cwrx = ReflectXAxis(r180cw);
-            BlockShape r270cwrx = ReflectXAxis(r270cw);
+            //BlockShape r90cw = Rotate90Clockwise(r0cw);
+            //BlockShape r180cw = Rotate90Clockwise(r90cw);
+            //BlockShape r270cw = Rotate90Clockwise(r180cw);
+            //BlockShape r0cwrx = ReflectXAxis(r0cw);
+            //BlockShape r90cwrx = ReflectXAxis(r90cw);
+            //BlockShape r180cwrx = ReflectXAxis(r180cw);
+            //BlockShape r270cwrx = ReflectXAxis(r270cw);
             return new List<BlockShape>
             {
                 r0cw,
-                r90cw,
-                r180cw,
-                r270cw,
-                r0cwrx,
-                r90cwrx,
-                r180cwrx,
-                r270cwrx
+                //r90cw,
+                //r180cw,
+                //r270cw,
+                //r0cwrx,
+                //r90cwrx,
+                //r180cwrx,
+                //r270cwrx
             };
         }
         public BlockShape Copy()

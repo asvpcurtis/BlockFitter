@@ -9,6 +9,6 @@ namespace BlockFitter
     class Config
     {
         public BlockShape Container { get; set; }
-        public IEnumerable<BlockShape> Pieces { get; set; }
+        public List<BlockShape> Pieces { get; set; }
     }
 }
