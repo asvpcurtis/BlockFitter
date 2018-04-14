@@ -88,43 +88,22 @@ namespace BlockFitter
         }
         public int NumberOfOverlappingPieces()
         {
-            int outsideBounds = pieces.Aggregate(0, (total, bs) => 
-            {
-                if (container.Contains(bs))
-                {
-                    return total;
-                }
-                return total + 1;
-            });
-            int pieceOverlaps = pieces.Aggregate(0, (total, bs1) =>
-            {
-                return total += pieces.Aggregate(0, (pTotal, bs2) =>
-                {
-                    if (bs1 != bs2 && bs1.Intersects(bs2))
-                    {
-                        return pTotal + 1;
-                    }
-                    return pTotal;
-                });
-            });
+            int outsideBounds = pieces
+                .Where(p => !container.Contains(p))
+                .Count();
+            int pieceOverlaps = pieces
+                .Where(p1 => pieces
+                    .Any(p2 => p1 != p2 && p1.Intersects(p2)))
+                .Count();
             return outsideBounds + (pieceOverlaps / 2);
         }
         public int SpaceUncovered()
         {
-            int spaceUncovered = container.Units.Aggregate(0, (total, cu) => 
-            {
-                bool pieceOn = pieces.SelectMany(p => p.Units)
-                    .Any(pu => 
-                        pu.X == cu.X && pu.Y == cu.Y);
-                if (pieceOn)
-                {
-                    return total;
-                }
-                else
-                {
-                    return total + 1;
-                }
-            });
+            int spaceUncovered = container.Units
+                .Where(cu => pieces
+                    .SelectMany(p => p.Units)
+                    .Any(pu => pu.X == cu.X && pu.Y == cu.Y))
+                .Count();
             return spaceUncovered;
         }
     }
