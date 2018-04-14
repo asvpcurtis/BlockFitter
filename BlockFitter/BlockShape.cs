@@ -98,5 +98,17 @@ namespace BlockFitter
         {
             return Units.Max(e => e.Y);
         }
+        public bool Contains(BlockShape bs)
+        {
+            return bs.Units.TrueForAll(bsu => 
+                Units.Any(u => 
+                    bsu.X == u.X && bsu.Y == u.Y));
+        }
+        public bool Intersects(BlockShape bs)
+        {
+            return bs.Units.Any(bsu =>
+                Units.Any(u =>
+                    bsu.X == u.X && bsu.Y == u.Y));
+        }
     }
 }

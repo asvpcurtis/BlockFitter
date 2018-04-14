@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BlockFitter
 {
-    interface IBlockFitter
+    interface IBlockFittingHeuristic
     {
-        State Climb(State problem, long timeoutMillis);
+        int Evaluate(State state);
     }
 }
