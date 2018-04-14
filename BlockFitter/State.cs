@@ -66,6 +66,7 @@ namespace BlockFitter
                 int yOffset = r.Next(containerBottom - containerTop - pieceBottom + 1);
                 copy.pieces[i] = po.Normalize(xOffset, yOffset);
             }
+            return copy;
         }
         public State GetRandomNeighbour(Random r)
         {
