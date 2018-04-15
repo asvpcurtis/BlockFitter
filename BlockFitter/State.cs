@@ -64,6 +64,7 @@ namespace BlockFitter
                 int pieceBottom = po.Bottom();
                 int xOffset = r.Next(containerRight - containerLeft - pieceRight + 1);
                 int yOffset = r.Next(containerBottom - containerTop - pieceBottom + 1);
+                Console.WriteLine($"(xOffset = {xOffset}, yOffset = {yOffset})");
                 copy.pieces[i] = po.Normalize(xOffset, yOffset);
             }
             return copy;

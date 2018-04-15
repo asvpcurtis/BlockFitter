@@ -13,16 +13,16 @@ namespace BlockFitter
         {
             return Normalize(0, 0);
         }
-        public BlockShape Normalize(int left, int top)
+        public BlockShape Normalize(int xOffset, int yOffset)
         {
-            int xOffset = Left();
-            int yOffset = Right();
+            int left = Left();
+            int top = Top();
             return new BlockShape
             {
                 Units = this.Units.Select(u => new Unit
                 {
-                    X = u.X - xOffset + left,
-                    Y = u.Y - yOffset + top
+                    X = u.X - left + xOffset,
+                    Y = u.Y - top + yOffset
                 }).ToList()
             };
         }
