@@ -8,7 +8,6 @@ namespace BlockFitter
 {
     class Config
     {
-        public BlockShape Container { get; set; }
-        public List<BlockShape> Pieces { get; set; }
+        public State Problem { get; set; }
     }
 }
