@@ -16,7 +16,7 @@ namespace BlockFitter
             this.pieces = pieces;
         }
 
-        public State Clone()
+        public State Copy()
         {
             return new State(container, pieces.Select(bs => bs.Copy()).ToList());
         }
@@ -38,7 +38,7 @@ namespace BlockFitter
                     {
                         for (int yOffset = containerTop; pieceBottom + yOffset <= containerBottom; yOffset++)
                         {
-                            State copy = Clone();
+                            State copy = Copy();
                             copy.pieces[i] = po.Normalize(xOffset, yOffset);
                             neighbours.Add(copy);
                         }
@@ -53,7 +53,7 @@ namespace BlockFitter
             int containerBottom = container.Bottom();
             int containerRight = container.Right();
             int containerLeft = container.Left();
-            State copy = Clone();
+            State copy = Copy();
             for (int i = 0; i < pieces.Count; i++)
             {
                 List<BlockShape> orientations = pieces[i].Orientations().Select(o => o.Normalize()).ToList();
@@ -83,7 +83,7 @@ namespace BlockFitter
             int pieceBottom = po.Bottom();
             int xOffset = r.Next(containerRight - containerLeft - pieceRight + 1);
             int yOffset = r.Next(containerBottom - containerTop - pieceBottom + 1);
-            State copy = Clone();
+            State copy = Copy();
             copy.pieces[pieceIndex] = po.Normalize(xOffset, yOffset);
             return copy;
         }
