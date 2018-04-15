@@ -19,9 +19,11 @@ namespace BlockFitter
             string configFilename = "../../config2.json";
             string json = System.IO.File.ReadAllText(configFilename);
             Config config = JsonConvert.DeserializeObject<Config>(json);
-            IBlockFitter hillClimber = new GeneticBlockFitter(new SpaceUncoveredHeuristic(), 100);
+            //IBlockFitter hillClimber = new GeneticBlockFitter(new SpaceUncoveredHeuristic(), 100);
+            //IBlockFitter hillClimber = new GeneticBlockFitter(new SpaceUncoveredHeuristic(), 100);
             //IBlockFitter hillClimber = new HillClimbingBlockFitter(new SpaceUncoveredHeuristic());
-            State solution = hillClimber.Climb(config.Problem, 1000);
+            IBlockFitter hillClimber = new GeneticBlockFitter(new SpaceCohesionHeuristic(), 100);
+            State solution = hillClimber.Climb(config.Problem, 10000);
             //State solution = config.Problem.GetRandomState(new Random());
             foreach (BlockShape bs in solution.pieces)
             {

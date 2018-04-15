@@ -32,7 +32,7 @@ namespace BlockFitter
             }
             List<State> neighbours = currState.GetNeighbours();
             while (neighbours.Count != 0 && 
-                (timeoutMillis == 0 || sw.ElapsedMilliseconds < timeoutMillis))
+                (sw.ElapsedMilliseconds < timeoutMillis))
             {
                 State next = neighbours[0];
                 neighbours.RemoveAt(0);

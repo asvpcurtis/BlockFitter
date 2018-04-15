@@ -64,7 +64,6 @@ namespace BlockFitter
                 int pieceBottom = po.Bottom();
                 int xOffset = r.Next(containerRight - containerLeft - pieceRight + 1);
                 int yOffset = r.Next(containerBottom - containerTop - pieceBottom + 1);
-                Console.WriteLine($"(xOffset = {xOffset}, yOffset = {yOffset})");
                 copy.pieces[i] = po.Normalize(xOffset, yOffset);
             }
             return copy;
@@ -97,6 +96,17 @@ namespace BlockFitter
                     .Any(p2 => p1 != p2 && p1.Intersects(p2)))
                 .Count();
             return outsideBounds + pieceOverlaps;
+        }
+        public int SpaceCohesion()
+        {
+            List<Unit> uncoveredUnits = container.Units
+                .Where(cu => pieces
+                    .SelectMany(p => p.Units)
+                    .All(pu => pu.X != cu.X || pu.Y != cu.Y)).ToList();
+            int seperationPenalty = uncoveredUnits.Aggregate(0, (sum1, u1) =>
+                    sum1 += uncoveredUnits.Aggregate(0, (sum2, u2) =>
+                        sum2 += Math.Abs(u1.X - u2.X) + Math.Abs(u1.Y - u2.Y)));
+            return seperationPenalty;
         }
         public int SpaceUncovered()
         {

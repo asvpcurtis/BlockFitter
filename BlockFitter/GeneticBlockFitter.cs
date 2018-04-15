@@ -27,7 +27,7 @@ namespace BlockFitter
             {
                 population.Add(problem.GetRandomState(r));
             }
-            while (timeoutMillis == 0 || sw.ElapsedMilliseconds < timeoutMillis)
+            while (sw.ElapsedMilliseconds < timeoutMillis)
             {
                 population = NextGen(population);
                 if (heuristic.Evaluate(population.Take(1).ToList()[0]) == 0)
