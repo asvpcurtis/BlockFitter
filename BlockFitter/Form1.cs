@@ -16,11 +16,12 @@ namespace BlockFitter
         public Form1()
         {
             InitializeComponent();
-            string configFilename = "../../config.json";
+            string configFilename = "../../config2.json";
             string json = System.IO.File.ReadAllText(configFilename);
             Config config = JsonConvert.DeserializeObject<Config>(json);
-            //IBlockFitter hillClimber = new HillClimbingBlockFitter(new IntersectingPiecesHeuristic());
-            State solution = config.Problem.GetRandomState(new Random());//hillClimber.Climb(config.Problem, 1000000);
+            IBlockFitter hillClimber = new HillClimbingBlockFitter(new SpaceUncoveredHeuristic());
+            State solution = hillClimber.Climb(config.Problem, 1000000);
+            //State solution = config.Problem.GetRandomState(new Random());
             foreach (BlockShape bs in solution.pieces)
             {
                 Console.WriteLine("Piece");
@@ -53,7 +54,6 @@ namespace BlockFitter
             float xRatio = pbxResult.Width / containerWidth;
             float yRatio = pbxResult.Height / containerHeight;
             float blockSize = Math.Min(xRatio, yRatio);
-            Console.WriteLine($"({(int)xRatio}, {(int)yRatio})");
             Rectangle UnitRectangle(Unit u)
             {
                 return new Rectangle((int)((u.X - xOffset) * blockSize),

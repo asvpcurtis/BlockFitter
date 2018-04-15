@@ -96,14 +96,14 @@ namespace BlockFitter
                 .Where(p1 => pieces
                     .Any(p2 => p1 != p2 && p1.Intersects(p2)))
                 .Count();
-            return outsideBounds + (pieceOverlaps / 2);
+            return outsideBounds + pieceOverlaps;
         }
         public int SpaceUncovered()
         {
             int spaceUncovered = container.Units
                 .Where(cu => pieces
                     .SelectMany(p => p.Units)
-                    .Any(pu => pu.X == cu.X && pu.Y == cu.Y))
+                    .All(pu => pu.X != cu.X || pu.Y != cu.Y))
                 .Count();
             return spaceUncovered;
         }
