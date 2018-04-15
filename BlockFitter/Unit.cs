@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlockFitter
 {
-    class Unit
+    public class Unit
     {
         public int X { get; set; }
         public int Y { get; set; }

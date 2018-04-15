@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlockFitter
 {
-    class BlockShape
+    public class BlockShape
     {
         public List<Unit> Units { get; set; }
         public BlockShape Normalize()

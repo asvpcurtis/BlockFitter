@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlockFitter
 {
-    class State
+    public class State
     {
         public BlockShape container;
         public List<BlockShape> pieces;
