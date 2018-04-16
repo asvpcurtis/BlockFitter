@@ -19,10 +19,37 @@ namespace BlockFitter
             string configFilename = "../../config2.json";
             string json = System.IO.File.ReadAllText(configFilename);
             Config config = JsonConvert.DeserializeObject<Config>(json);
-            IBlockFitter hillClimber = new GeneticBlockFitter(new SpaceUncoveredHeuristic(), 100);
-            //IBlockFitter hillClimber = new HillClimbingBlockFitter(new SpaceUncoveredHeuristic());
-            State solution = hillClimber.Climb(config.Problem, 1000);
-            //State solution = config.Problem.GetRandomState(new Random());
+            IBlockFittingHeuristic heuristic;
+            IBlockFitter hillClimber;
+            switch (config.Heuristic)
+            {
+                case "IntersectingPieces":
+                    heuristic = new IntersectingPiecesHeuristic();
+                    break;
+                case "SpaceUncovered":
+                    heuristic = new SpaceUncoveredHeuristic();
+                    break;
+                case "SpaceCohesion":
+                    heuristic = new SpaceCohesionHeuristic();
+                    break;
+                default:
+                    throw new FormatException();
+            }
+            switch (config.HillClimbStrategy)
+            {
+                case "SimpleHillClimbing":
+                    hillClimber = new HillClimbingBlockFitter(heuristic);
+                    break;
+                case "GeneticAlgorithm":
+                    hillClimber = new GeneticBlockFitter(heuristic, 100);
+                    break;
+                case "SimulatedAnnealing":
+                    hillClimber = new AnnealingBlockFitter(heuristic);
+                    break;
+                default:
+                    throw new FormatException();
+            }
+            State solution = hillClimber.Climb(config.Problem, 10000);
             foreach (BlockShape bs in solution.pieces)
             {
                 Console.WriteLine("Piece");
