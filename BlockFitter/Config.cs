@@ -8,6 +8,9 @@ namespace BlockFitter
 {
     class Config
     {
+        public string Heuristic { get; set; }
+        public string HillClimbStrategy { get; set; }
+        public long TimeoutMillis { get; set; }
         public State Problem { get; set; }
     }
 }

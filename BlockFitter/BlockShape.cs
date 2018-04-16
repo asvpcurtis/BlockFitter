@@ -28,7 +28,6 @@ namespace BlockFitter
         }
         public List<BlockShape> Orientations()
         {
-            // for now limit orientations to limit search
             BlockShape r0cw = Copy();
             BlockShape r90cw = Rotate90Clockwise(r0cw);
             BlockShape r180cw = Rotate90Clockwise(r90cw);

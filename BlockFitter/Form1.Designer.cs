@@ -34,7 +34,7 @@
             // 
             // pbxResult
             // 
-            this.pbxResult.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pbxResult.BackColor = System.Drawing.SystemColors.Control;
             this.pbxResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbxResult.Location = new System.Drawing.Point(0, 0);
             this.pbxResult.Name = "pbxResult";

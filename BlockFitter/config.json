@@ -1,4 +1,7 @@
 ﻿{
+    "Heuristic": "SpaceCohesion",
+    "HillClimbStrategy": "SimulatedAnnealing",
+    "TimeoutMillis": 10000,
     "Problem": {
         "Container": {
             "Units": [
