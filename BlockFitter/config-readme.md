@@ -27,7 +27,7 @@ A `{"x": 0, "y": 0}` co-ordinate that represents a block
 ### Blockshape
 A list of units/blocks that when combined form a blocky shape
 
-
+## Sample Config File
 
 ``` json
 {
