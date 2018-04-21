@@ -16,7 +16,7 @@ namespace BlockFitter
         public Form1()
         {
             InitializeComponent();
-            string configFilename = "../../config2.json";
+            string configFilename = "../../config.json";
             string json = System.IO.File.ReadAllText(configFilename);
             Config config = JsonConvert.DeserializeObject<Config>(json);
             IBlockFittingHeuristic heuristic;
@@ -49,6 +49,25 @@ namespace BlockFitter
                 default:
                     throw new FormatException();
             }
+            /*
+            double intersectingSum = 0;
+            double coveredSum = 0;
+            double manhattanSum = 0;
+            for (int i = 0; i < 25; i++)
+            {
+                State solution = hillClimber.Climb(config.Problem, 10000);
+                intersectingSum += new IntersectingPiecesHeuristic().Evaluate(solution);
+                coveredSum += new SpaceUncoveredHeuristic().Evaluate(solution);
+                manhattanSum += new SpaceCohesionHeuristic().Evaluate(solution);
+            }
+            intersectingSum /= 25;
+            coveredSum /= 25;
+            manhattanSum /= 25;
+            Console.WriteLine($"intersect={intersectingSum}");
+            Console.WriteLine($"covered={coveredSum}");
+            Console.WriteLine($"manhattan={manhattanSum}");
+            */
+            
             State solution = hillClimber.Climb(config.Problem, 10000);
             foreach (BlockShape bs in solution.pieces)
             {
@@ -64,6 +83,8 @@ namespace BlockFitter
                 DrawState(solution);
             };
             DrawState(solution);
+            
+            
         }
         private SolidBrush RandomColorBrush (Random r)
         {
