@@ -106,7 +106,7 @@ namespace BlockFitter
             int seperationPenalty = uncoveredUnits.Aggregate(0, (sum1, u1) =>
                     sum1 += uncoveredUnits.Aggregate(0, (sum2, u2) =>
                         sum2 += Math.Abs(u1.X - u2.X) + Math.Abs(u1.Y - u2.Y)));
-            return seperationPenalty;
+            return seperationPenalty + SpaceUncovered();
         }
         public int SpaceUncovered()
         {
